@@ -12,6 +12,7 @@ const port = 3000
 const server = express()
 const compiler = webpack(config)
 const apiRoutes = require('./api')
+const styleGuide = require('./styleguide/styleguide.js')
 
 server.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -22,6 +23,10 @@ server.use(require('webpack-hot-middleware')(compiler))
 
 server.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, '../index.html'))
+})
+
+server.get('/styleguide', (request, response) => {
+  response.sendFile(path.join(__dirname, '../styleguide.html'))
 })
 
 server.listen(port, function onAppListening(err){
@@ -35,5 +40,6 @@ server.listen(port, function onAppListening(err){
 server.use(express.static('../build/'))
 server.use(bodyParser.json())
 server.use('/api', apiRoutes)
+server.use('/styleguide', styleGuide)
 
 module.exports = router
