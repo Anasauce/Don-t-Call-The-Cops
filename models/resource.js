@@ -34,6 +34,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     create_by: DataTypes.STRING,
     description: DataTypes.STRING
+  },
+    {
+      classMethods: {
+        associate: function( Models ) {
+          Resource.hasMany( Models.Comment )
+          Resource.hasMany( Models.Issue )
+        }
+      }
   });
   return Resource;
 };
