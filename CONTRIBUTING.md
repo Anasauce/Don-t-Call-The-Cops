@@ -19,12 +19,16 @@ git push -fu origin HEAD
 
 ## Submit a pull request
 Rebase your branch off of the latest upstream/master before submitting your pull request
+- Please have one PR for each spec
+- Squash all commit messages into one meaningful message before issuing PR
+- All PRs must go through a code review before being merged
 
 ```
 git commit ... // commit all your changes
 git fetch upstream
-git rebase upstream/master
+git rebase -i upstream/master
 //resolve any conflicts
+//reword one meaningful commit message
 npm install
 npm test
 git push -f origin HEAD
