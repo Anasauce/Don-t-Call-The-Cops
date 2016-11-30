@@ -13,7 +13,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const app = express()
 
-app.set( 'models', models )
+// app.set( 'models', models )
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
@@ -40,7 +40,7 @@ app.use(middleware)
 app.use(webpackHotMiddleware(compiler))
 
 app.get('*', (request, response) => {
-  response.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')))
+  response.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'build/index.html')))
   response.end()
 })
 
