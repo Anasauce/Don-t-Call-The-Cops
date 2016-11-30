@@ -4,18 +4,15 @@ const favicon = require('serve-favicon')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
-const pug = require('pug')
 
-const models = require( './models/index' )
-const routes = require('./routes/index')
-const users = require('./routes/users')
-const resources = require('./routes/resources')
+const webpack = require('webpack')
+const config = require('./webpack.config.js')
+const compiler = webpack(config)
+const webpackMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const app = express()
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
 app.set( 'models', models )
 
 // uncomment after placing your favicon in /public
@@ -24,38 +21,61 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', routes)
-app.use('/users', users)
-app.use('/resources', resources)
+const middleware = webpackMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  noInfo: false,
+  contentBase: 'src',
+  stats: {
+    colors: true,
+    hash: false,
+    timings: true,
+    chunks: false,
+    chunkModules: false,
+    modules: false
+  }
+})
+
+app.use(middleware)
+app.use(webpackHotMiddleware(compiler))
+
+app.get('*', (request, response) => {
+  response.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')))
+  response.end()
+})
+
+// server.get('/', (request, response) => {
+//   response.sendFile(path.join(__dirname, '../index.html'))
+// })
+
+// server.listen(port, function onAppListening(err){
+//   if (err) {
+//     console.error(err)
+//   } else {
+//     console.info('webpack dev server listening on port %s', '3000' )
+//   }
+// })
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(request, response, next) {
   var err = new Error('Not Found')
   err.status = 404
   next(err)
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
+  app.use(function(err, request, response, next) {
+    response.status(err.status || 500);
+    response.render('error', {
       message: err.message,
       error: err
     });
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
+app.use(function(err, request, response, next) {
+  response.status(err.status || 500);
+  response.render('error', {
     message: err.message,
     error: {}
   });
