@@ -29,6 +29,6 @@ class App extends Component {
   }
 }
 
-$(document).ready( function() {
+$(document).ready( () => {
   ReactDom.render( <App />, document.getElementById('DontCall') )
 })

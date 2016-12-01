@@ -4,7 +4,8 @@ const router = new express.Router()
 router.get('/', (request, response) => {
   const data = {
     'name': 'person',
-    'people': 'many'
+    'people': 'many',
+    'apple': 'red'
   }
   response.json(data)
 })
