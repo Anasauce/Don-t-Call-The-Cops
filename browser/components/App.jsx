@@ -8,16 +8,13 @@ class App extends Component {
     this.state = { data: []}
   }
   componentWillMount(){
-    fetch('http://localhost:5000/api', {
-      mode: 'no-cors',
-      method: 'get'
-      })
+    fetch('http://localhost:5000/api')
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
         this.setState({data: data})
       })
-      .catch(error => console.log('Ana and James did this', error))
+      .catch(error => console.log('Error', error))
   }
   render() {
     return <div>
@@ -27,4 +24,4 @@ class App extends Component {
   }
 }
 
-ReactDom.render( <App />, document.getElementById('DontCall') )
+$(document).ready(ReactDom.render( <App />, document.getElementById('DontCall') ))

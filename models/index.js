@@ -5,7 +5,7 @@ let path      = require('path');
 let Sequelize = require('sequelize');
 let basename  = path.basename(module.filename);
 let env       = process.env.NODE_ENV || 'development';
-let config    = require(__dirname + '/../config/config.js')[env];
+let config    = require(__dirname + '/../config.js')[env];
 let db        = {};
 
 let sequelize = new Sequelize( process.env.DATABASE_URL );
