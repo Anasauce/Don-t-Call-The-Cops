@@ -3,11 +3,13 @@ import ReactDom from 'react-dom'
 import dataStore from '../stores/dataStore'
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state = { data: []}
+  constructor( props ) {
+    super( props )
+
+    this.state = { data: [] }
   }
-  componentWillMount(){
+
+  componentWillMount() {
     fetch('http://localhost:5000/api')
       .then((response) => response.json())
       .then((data) => {
@@ -16,12 +18,17 @@ class App extends Component {
       })
       .catch(error => console.log('Error', error))
   }
+
   render() {
-    return <div>
-      <h1> JustUs </h1>
-      {this.state.data.name}
-    </div>
+    return (
+      <div>
+        <h1> JustUs </h1>
+        {this.state.data.name}
+      </div>
+    )
   }
 }
 
-$(document).ready(ReactDom.render( <App />, document.getElementById('DontCall') ))
+$(document).ready( function() {
+  ReactDom.render( <App />, document.getElementById('DontCall') )
+})

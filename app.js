@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const apiRoutes = require('./api/index.js')
 const server = express()
 
+const cors = require( './api/cors' )
+
 // uncomment after placing your favicon in /public
 //server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 server.use(logger('dev'))
@@ -14,6 +16,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(cookieParser())
 
+server.use( cors )
 server.use('/api', apiRoutes)
 
 // server.get('/', (request, response) => {
