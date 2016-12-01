@@ -7,11 +7,13 @@ const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const webpack = require('webpack')
 const config = require('../webpack.config.js')
+const webpackMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const port = 3000
 const app = express()
 const compiler = webpack(config)
-const apiRoutes = require('../server/api')
+const apiRoutes = require('../api')
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -20,8 +22,26 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler))
 
-app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, '../index.html'))
+const middleware = webpackMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  noInfo: false,
+  contentBase: 'src',
+  stats: {
+    colors: true,
+    hash: false,
+    timings: true,
+    chunks: false,
+    chunkModules: false,
+    modules: false
+  }
+})
+
+app.use(middleware)
+app.use(webpackHotMiddleware(compiler))
+
+app.get('*', (request, response) => {
+  response.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../build/index.html')))
+  response.end()
 })
 
 app.listen(port, function onAppListening(err){
