@@ -11,16 +11,15 @@ const compiler = webpack(config)
 const webpackMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
-const app = express()
+const server = express()
 
-// app.set( 'models', models )
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
+//server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+server.use(logger('dev'))
+server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: false }))
+server.use(cookieParser())
 
 const middleware = webpackMiddleware(compiler, {
   publicPath: config.output.publicPath,
@@ -36,23 +35,23 @@ const middleware = webpackMiddleware(compiler, {
   }
 })
 
-app.use(middleware)
-app.use(webpackHotMiddleware(compiler))
+server.use(middleware)
+server.use(webpackHotMiddleware(compiler))
 
-app.get('*', (request, response) => {
+server.get('*', (request, response) => {
   response.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'build/index.html')))
   response.end()
 })
 
 // catch 404 and forward to error handler
-app.use(function(request, response, next) {
+server.use(function(request, response, next) {
   var err = new Error('Not Found')
   err.status = 404
   next(err)
 });
 
-if (app.get('env') === 'development') {
-  app.use(function(err, request, response, next) {
+if (server.get('env') === 'development') {
+  server.use(function(err, request, response, next) {
     response.status(err.status || 500);
     response.render('error', {
       message: err.message,
@@ -61,7 +60,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-app.use(function(err, request, response, next) {
+server.use(function(err, request, response, next) {
   response.status(err.status || 500);
   response.render('error', {
     message: err.message,
@@ -70,4 +69,4 @@ app.use(function(err, request, response, next) {
 });
 
 
-module.exports = app;
+module.exports = server;

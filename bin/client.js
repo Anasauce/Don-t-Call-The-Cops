@@ -9,22 +9,22 @@ const webpack = require('webpack')
 const config = require('../webpack.config.js')
 
 const port = 3000
-const server = express()
+const app = express()
 const compiler = webpack(config)
 const apiRoutes = require('../server/api')
 
-server.use(require('webpack-dev-middleware')(compiler, {
+app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
 }))
 
-server.use(require('webpack-hot-middleware')(compiler))
+app.use(require('webpack-hot-middleware')(compiler))
 
-server.get('/', (request, response) => {
+app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, '../index.html'))
 })
 
-server.listen(port, function onAppListening(err){
+app.listen(port, function onAppListening(err){
   if (err) {
     console.error(err)
   } else {
@@ -32,8 +32,8 @@ server.listen(port, function onAppListening(err){
   }
 })
 
-server.use(express.static('../build/'))
-server.use(bodyParser.json())
-server.use('/api', apiRoutes)
+app.use(express.static('../build/'))
+app.use(bodyParser.json())
+app.use('/api', apiRoutes)
 
 module.exports = router
