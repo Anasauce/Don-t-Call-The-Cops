@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nf start",
     "start:dev": "DEBUG=floworky:* nf start --procfile Procfile.dev",
-    "start:dev:front": "node ./server/index.js",
+    "start:dev:front": "node ./bin/client.js",
     "webpack": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js webpack-dev-server --progress --colors",
     "babel-node": "babel-node --presets=es2015",
     "test": "babel-node spec/run.js",

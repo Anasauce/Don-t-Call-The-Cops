@@ -44,18 +44,6 @@ app.get('*', (request, response) => {
   response.end()
 })
 
-// server.get('/', (request, response) => {
-//   response.sendFile(path.join(__dirname, '../index.html'))
-// })
-
-// server.listen(port, function onAppListening(err){
-//   if (err) {
-//     console.error(err)
-//   } else {
-//     console.info('webpack dev server listening on port %s', '3000' )
-//   }
-// })
-
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
   var err = new Error('Not Found')
