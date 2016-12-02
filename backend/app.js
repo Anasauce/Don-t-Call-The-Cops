@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const apiRoutes = require('./api/index.js')
 const server = express()
 
-const cors = require( './api/cors' )
+const cors = require( './cors' )
 
 // uncomment after placing your favicon in /public
 //server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))

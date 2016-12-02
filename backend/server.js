@@ -5,7 +5,7 @@
  */
 
 // const app = require('../server/index');
-const app = require('../app');
+const app = require('./app');
 const debug = require('debug')('Dont-Call-Cops:server');
 const http = require('http');
 

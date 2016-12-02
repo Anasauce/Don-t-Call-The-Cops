@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = {
   entry: [
-    path.join(__dirname, '/browser/main.js'),
+    path.join(__dirname, '/frontend/main.js'),
     'webpack-hot-middleware/client?reload=true'
   ],
   output: {
@@ -31,7 +31,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'browser/index.html',
+      template: 'frontend/index.html',
       inject: 'body',
       filename: 'index.html'
     }),

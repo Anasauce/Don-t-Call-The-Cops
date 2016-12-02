@@ -39,7 +39,7 @@ git push -f origin HEAD
 In order to create the database for this project, run the following:
 
 ```
-createdb NoCops
+createdb justus
 ```
 
 #### Fork the Project and Add Remote Upstream

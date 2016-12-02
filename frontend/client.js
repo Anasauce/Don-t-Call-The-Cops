@@ -13,7 +13,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const port = 3000
 const app = express()
 const compiler = webpack(config)
-const apiRoutes = require('../api')
+const apiRoutes = require('../backend/api')
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
