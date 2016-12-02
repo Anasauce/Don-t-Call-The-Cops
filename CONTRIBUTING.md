@@ -39,7 +39,7 @@ git push -f origin HEAD
 In order to create the database for this project, run the following:
 
 ```
-createdb justus
+createdb justus-development
 ```
 
 #### Fork the Project and Add Remote Upstream
@@ -57,6 +57,12 @@ $ brew install postgress
 $ brew tap homebrew/services
 $ brew services start postgresql
 ```
+#### Migration
+
+New migration ``` knex migrate:create [table_name] ```
+Update migrations ``` npm run migrate```
+Rollback migrations ``` npm run migrate:rollback ```
+
 #### Add Nodemon to the Command Line
 
 ```
@@ -80,9 +86,9 @@ At this point, you should be able to run 'yarn start' or 'npm start' without err
 
 Ask Contributors any questions about this project!
 
-Week 1:
 - [deonna](https://github.com/deonna)
 - [dianavashti](https://github.com/dianavashti)
 - [shakalee14](https://github.com/shakalee14)
 - [nicosesma](https://github.com/nicosesma)
 - [AnaSauce](https://github.com/AnaSauce)
+- [jamestewartjr](https://github.com/jamestewartjr)
