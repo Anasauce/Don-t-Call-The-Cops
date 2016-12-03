@@ -1,17 +1,15 @@
 const express = require('express')
 const router = new express.Router()
+const database = require('../database/select')
 
 router.get('/', (request, response) => {
-  const data = {
-    'name': 'person',
-    'people': 'many',
-    'apple': 'red'
-  }
-  response.json(data)
+
+  database.getAllResources()
+  .then( resources =>
+    response.json(resources)
+  )
+
 })
 
-router.get('/styleguide', (request, response) => {
-  response.render('../')
-})
 
 module.exports = router
