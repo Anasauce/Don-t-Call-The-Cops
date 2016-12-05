@@ -11,12 +11,10 @@ class App extends Component {
 
   componentWillMount() {
     fetch('http://localhost:5000/api')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        this.setState({data: data})
+      .then( response => response.json() )
+      .then( data => {
+        this.setState({ data })
       })
-      .catch(error => console.log('Error', error))
   }
 
   render() {
